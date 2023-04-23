@@ -12,7 +12,7 @@ pylint-report.txt
 dist
 build
 env/
-log/
+logs/
 *.sqlite3
 management/migrations/*
 form/migrations/*
