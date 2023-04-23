@@ -13,3 +13,7 @@ dist
 build
 env/
 log/
+*.sqlite3
+management/migrations/*
+form/migrations/*
+home/migrations/*
