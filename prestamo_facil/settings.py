@@ -10,12 +10,22 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Set the desired log level from environment variable:
+LOG_LEVEL = str(os.getenv("LOG_LEVEL", "INFO"))
+
+# Persistent directory to save files. To be mounted as a docker volume
+PERSISTENT_DIR = os.getenv("PERSISTENT_DIR", BASE_DIR)
+
+# Log files paths
+LOG_FILE_PATH = os.path.join(PERSISTENT_DIR, "logs", "prestamo_facil.log")
+if not os.path.isdir(os.path.join(PERSISTENT_DIR, "logs")):
+    os.makedirs(os.path.join(PERSISTENT_DIR, "logs"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -32,15 +42,15 @@ ALLOWED_HOSTS: list = []
 # Application definition
 
 INSTALLED_APPS = [
+    "home",
+    "form",
+    "management",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "home",
-    "form",
-    "management",
 ]
 
 MIDDLEWARE = [
@@ -123,7 +133,60 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{asctime} - {levelname} - {module} - {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": LOG_LEVEL,
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+        "file": {
+            "level": LOG_LEVEL,
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "filename": LOG_FILE_PATH,
+            "when": "D",
+            "interval": 1,
+            "backupCount": 7,
+            "utc": True,
+            "delay": True,
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "file"],
+            "level": "INFO",
+            "propagate": True,
+        },
+        "django.request": {
+            "handlers": ["console", "file"],
+            "level": "INFO",
+            "propagate": True,
+        },
+        "prestamo_facil": {
+            "handlers": ["console", "file"],
+            "level": LOG_LEVEL,
+            "propagate": True,
+        },
+    },
+}
