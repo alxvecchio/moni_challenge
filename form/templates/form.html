@@ -37,25 +37,25 @@
                 <div class="form-group row">
                 <label for="dni" class="col-sm-2 col-form-label">DNI</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="dni" name="dni" placeholder="Ingrese su DNI">
+                    <input type="text" class="form-control" id="dni" name="dni" placeholder="Ingrese su DNI" required>
                 </div>
                 </div>
                 <div class="form-group row">
-                <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
+                <label for="name" class="col-sm-2 col-form-label">Nombre</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese su nombre">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese su nombre" required>
                 </div>
                 </div>
                 <div class="form-group row">
-                <label for="apellido" class="col-sm-2 col-form-label">Apellido</label>
+                <label for="last_name" class="col-sm-2 col-form-label">Apellido</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingrese su apellido">
+                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Ingrese su apellido" required>
                 </div>
                 </div>
                 <div class="form-group row">
-                <label for="genero" class="col-sm-2 col-form-label">Género</label>
+                <label for="gender" class="col-sm-2 col-form-label">Género</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="genero" name="genero">
+                    <select class="form-control" id="gender" name="gender" required>
                     <option value="M">Masculino</option>
                     <option value="F">Femenino</option>
                     <option value="O">Otro</option>
@@ -65,13 +65,13 @@
                 <div class="form-group row">
                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese su email">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese su email" required>
                 </div>
                 </div>
                 <div class="form-group row">
-                <label for="monto" class="col-sm-2 col-form-label">Monto solicitado</label>
+                <label for="amount_requested" class="col-sm-2 col-form-label">Monto solicitado</label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" id="monto" name="monto" placeholder="Ingrese el monto solicitado">
+                    <input type="number" class="form-control" id="amount_requested" name="amount_requested" placeholder="Ingrese el monto solicitado" required>
                 </div>
                 </div>
                 <div class="form-group row">
@@ -79,6 +79,21 @@
                     <button type="submit" class="btn btn-primary">Enviar</button>
                 </div>
                 </div>
+
+                {% for message in messages %}
+                    <div class="container text-center">
+                        {% if status == False %}
+                            <p class="col", style="color: rgb(247, 3, 3);"><b>{{ msg_error }}</b></p>
+                        {% elif status == 'approve' %}
+                            <p class="col", style="color: darkgreen;">{{ success_msg }}</p>
+                            <p class="col", style="color: darkgreen;"><b>{{ status_msg }} {{ status }}</b></p>
+                        {% else %}
+                            <p class="col", style="color: darkgreen;">{{ success_msg }}</p>
+                            <p class="col", style="color: rgb(247, 3, 3);"><b>{{ status_msg }} {{ status }}</b></p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
             </form>
     </div>
     {% endblock %}
