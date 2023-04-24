@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib import messages
 from form.models import Form
+from prestamo_facil.constants import STATUS_MSG, SUCCESS_MSG, MSG_ERROR
 
 
 logger = logging.getLogger("prestamo_facil")
@@ -37,8 +38,6 @@ def form(request) -> HttpResponse:
             or not email
             or not amount_requested
         ):
-            print("uooohh", dni, type(dni))
-            print("nombre", name, last_name, gender, email, amount_requested)
             messages.info(request, "¡ERROR! - Hay un error en algún campo")
             return render(request, "form.html")
         # request to API
@@ -57,25 +56,21 @@ def form(request) -> HttpResponse:
                 amount_requested=amount_requested,
                 application_status=status,
             )
-            success_msg = "Solicitud registrada con éxito"
-            status_msg = "Estado de la solicitud:"
-            messages.info(request, success_msg + " " + status_msg + " " + status)
+            messages.info(request, SUCCESS_MSG + " " + STATUS_MSG + " " + status)
             return render(
                 request,
                 "form.html",
                 {
-                    "success_msg": success_msg,
-                    "status_msg": status_msg,
+                    "success_msg": SUCCESS_MSG,
+                    "status_msg": STATUS_MSG,
                     "status": status,
                 },
             )
         else:
-            print("BUUUUUUUUUH")
             status = False
-            msg_error = "¡ERROR! - La solicitud no pudo ser registrada"
-            messages.info(request, msg_error)
+            messages.info(request, MSG_ERROR)
             return render(
-                request, "form.html", {"msg_error": msg_error, "status": status}
+                request, "form.html", {"msg_error": MSG_ERROR, "status": status}
             )
 
     return render(request, "form.html")
