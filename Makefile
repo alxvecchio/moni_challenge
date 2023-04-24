@@ -1,3 +1,6 @@
+create-admin-user:
+	python manage.py createsuperuser
+
 start:
 	python manage.py runserver
 
