@@ -50,7 +50,6 @@
 				<tbody>
 					{% if loans %}
 						{% for loan in loans %}
-							<!--<p>{{ prestamo.name }} {{ prestamo.last_name }} - {{ prestamo.amount_requested }} - {% if prestamo.application_status == 'approve' %}Aprobado{% else %}Rechazado{% endif %} - <a href="#">Editar</a> - <a href="#">Eliminar</a></p> -->
 							<tr>
 								<td class="colum-style" style="text-align:center">{{ loan.name }} {{ loan.last_name }}</td>
 								<td class="colum-style" style="text-align:center">{{ loan.dni }}</td>
