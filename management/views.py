@@ -22,6 +22,7 @@ def login_manage(request) -> HttpResponse:
     Returns:
         HttpResponse: Renders login_manage.html template.
     """
+    logger.info(f'Entering Login to Management from {request.META["REMOTE_ADDR"]}')
     if request.user.is_staff:
         return redirect("management")
     if request.method == "POST":
@@ -47,6 +48,7 @@ def management(request) -> HttpResponse:
     Returns:
         HttpResponse: Renders management.html template with the requests loans.
     """
+    logger.info(f'Entering Management from {request.META["REMOTE_ADDR"]}')
     if not request.user.is_staff:
         return HttpResponse("No tienes permiso para acceder a esta página")
     loans = Form.objects.all()
@@ -64,3 +66,24 @@ def logout_user(request) -> HttpResponse:
     """
     logout(request)
     return redirect("home")
+
+
+def delete_loan(request, loan_id) -> HttpResponse:
+    """Delete a request.
+
+    Args:
+        request (HttpRequest): HTTP Request.
+        loan_id (int): id of the loan
+
+    Returns:
+        HttpResponse: Redirect to management.
+    """
+    try:
+        loan = Form.objects.get(id=loan_id)
+        loan.delete()  # Elimina el préstamo
+        messages.success(request, "El préstamo ha sido eliminado exitosamente.")
+    except Form.DoesNotExist:
+        messages.error(
+            request, "El préstamo no existe o ha sido eliminado previamente."
+        )
+    return redirect("management")
