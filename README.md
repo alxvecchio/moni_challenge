@@ -1,8 +1,6 @@
 # moni-challenge
 
-
-
-## Enunciado del challenge
+## Requerimientos del challenge
 
 Se debe desarrollar un sitio web en el que se registran pedido de préstamos de usuarios que acceden a él.
 El usuario no necesita registrarse para solicitar un préstamo.
@@ -21,3 +19,32 @@ Contemplar casos de datos ingresados con errores.
 También se debe desarrollar un sitio de administración en el que se puedan ver los pedidos de préstamo, con la opción de editarlos y eliminarlos. A este sitio sólo pueden acceder usuarios administradores.
 
 **Nota: No usar admin de Django.**
+
+## Instalación
+
+* Clonarse el proyecto
+   ```
+   git clone git@gitlab.com:vecchio/moni-challenge.git
+   ```
+* Crear entorno virtual, con Python 3.10
+* Instalar dependencias y crear migraciones
+
+   ```
+   make dev-environment
+   ```
+* Crear superuser
+
+   ```
+   make create-admin-user
+   ```
+
+## Ejecución
+Ejecutar comando:
+
+```
+make start
+```
+Dirigirse a:
+```
+http://127.0.0.1:8000/
+```
