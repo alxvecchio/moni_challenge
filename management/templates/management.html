@@ -59,6 +59,7 @@
 						<th class="colum-style" style="text-align:center" scope="col">Nombre del cliente</th>
 						<th class="colum-style" style="text-align:center" scope="col">DNI</th>
 						<th class="colum-style" style="text-align:center" scope="col">Monto solicitado</th>
+						<th class="colum-style" style="text-align:center" scope="col">Fecha y Hora</th>
 						<th class="colum-style" style="text-align:center" scope="col">Estado</th>
 					</tr>
 				</thead>
@@ -69,6 +70,7 @@
 								<td class="colum-style" style="text-align:center">{{ loan.name }} {{ loan.last_name }}</td>
 								<td class="colum-style" style="text-align:center">{{ loan.dni }}</td>
 								<td class="colum-style" style="text-align:center">{{ loan.amount_requested }}</td>
+								<td class="colum-style" style="text-align:center">{{ loan.date }}</td>
 								{% if loan.application_status == 'approve' %}
 									<td class="colum-style" style="text-align:center; color: darkgreen;">Aprobado</td>
 								{% else %}

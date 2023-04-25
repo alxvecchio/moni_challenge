@@ -3,6 +3,7 @@
 
 import requests
 import logging
+import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib import messages
@@ -23,6 +24,7 @@ def form(request) -> HttpResponse:
         HttpResponse: Renders form.html template with the given context.
     """
     logger.info(f'Entering Form from {request.META["REMOTE_ADDR"]}')
+    now = datetime.datetime.now().strftime("%d-%m-%Y - %H:%M:%S")
     if request.method == "POST":
         dni = request.POST.get("dni")
         name = request.POST.get("name")
@@ -30,6 +32,7 @@ def form(request) -> HttpResponse:
         gender = request.POST.get("gender")
         email = request.POST.get("email")
         amount_requested = request.POST.get("amount_requested")
+        date = request.POST.get("date")
         # Validation of entered data
         if (
             not dni
@@ -55,6 +58,7 @@ def form(request) -> HttpResponse:
                 gender=gender,
                 email=email,
                 amount_requested=amount_requested,
+                date=now,
                 application_status=status,
             )
             messages.info(request, SUCCESS_MSG + " " + STATUS_MSG + " " + status)
