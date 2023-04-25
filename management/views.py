@@ -64,3 +64,24 @@ def logout_user(request) -> HttpResponse:
     """
     logout(request)
     return redirect("home")
+
+
+def delete_loan(request, loan_id) -> HttpResponse:
+    """Delete a request.
+
+    Args:
+        request (HttpRequest): HTTP Request.
+        loan_id (int): id of the loan
+
+    Returns:
+        HttpResponse: Redirect to management.
+    """
+    try:
+        loan = Form.objects.get(id=loan_id)
+        loan.delete()  # Elimina el préstamo
+        messages.success(request, "El préstamo ha sido eliminado exitosamente.")
+    except Form.DoesNotExist:
+        messages.error(
+            request, "El préstamo no existe o ha sido eliminado previamente."
+        )
+    return redirect("management")
