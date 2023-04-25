@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Prestamo Facil</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+		.center {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 70vh;
+		}
+	</style>
+</head>
+
+<body style="background-image: url('/static/fondo.avif'); background-color: #F3F3F3; background-repeat:no-repeat;">
+	<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+		<a class="navbar-brand" style="color: #17A2B8;" href="{% url 'home' %}">Préstamo Fácil</a>
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'login_manage' %}">Ingresar</a>
+			</li>
+		</ul>
+	</nav>
+	<div class="center d-flex flex-column align-items-center">
+		<h1 class="text-center mb-5" style="color: #17A2B8;">Solicita tu préstamo ahora</h1>
+		<button class="btn btn-primary btn-lg" style="text-align:center" onclick="location.href='/form/'">SOLICITAR!</button>
+	</div>
+
+    <footer class="footer mt-5 py-3">
+        <div class="container text-center">
+          <span class="text-muted"><a href="https://www.moni.com.ar" target="_blank">By Moni</a></span>
+        </div>
+    </footer>
+
+	<script src="{% static 'js/jquery-3.2.1.slim.min.js' %}" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="{% static 'js/popper.min.js' %}" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

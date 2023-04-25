@@ -1,0 +1,114 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Prestamo Facil</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		.center {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 70vh;
+            margin-top: 60px;
+		}
+	</style>
+</head>
+
+<body style="background-image: url('/static/fondo.avif'); background-color: #F3F3F3; background-repeat:no-repeat;">
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+		<a class="navbar-brand" style="color: #17A2B8;" href="{% url 'home' %}">Préstamo Fácil</a>
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'login_manage' %}">Ingresar</a>
+			</li>
+		</ul>
+	</nav>
+
+    {% block content %}
+    <div class="container">
+        <div class="center d-flex flex-column align-items-center">
+            <h2 class="text-center mb-5" style="color: #17A2B8;">Solicitud de préstamo</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="dni" class="col-sm-2 col-form-label">DNI</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="dni" name="dni" placeholder="Ingrese su DNI" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="name" class="col-sm-2 col-form-label">Nombre</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese su nombre" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="last_name" class="col-sm-2 col-form-label">Apellido</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Ingrese su apellido" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="gender" class="col-sm-2 col-form-label">Género</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="gender" name="gender" required>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                            <option value="O">Otro</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese su email" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="amount_requested" class="col-sm-2 col-form-label">Monto solicitado</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="amount_requested" name="amount_requested" placeholder="Ingrese el monto solicitado" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10 offset-sm-1 text-center">
+                        <button type="submit" class="btn btn-primary" style="background-color: #17A2B8;">Enviar</button>
+                    </div>
+                </div>
+
+                {% for message in messages %}
+                    <div class="container text-center">
+                        {% if status == False %}
+                            <p class="col", style="color: rgb(247, 3, 3);"><b>{{ msg_error }}</b></p>
+                        {% elif status == 'approve' %}
+                            <p class="col", style="color: darkgreen;">{{ success_msg }}</p>
+                            <p class="col", style="color: darkgreen;"><b>{{ status_msg }} {{ status }}</b></p>
+                        {% else %}
+                            <p class="col", style="color: darkgreen;">{{ success_msg }}</p>
+                            <p class="col", style="color: rgb(247, 3, 3);"><b>{{ status_msg }} {{ status }}</b></p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+
+    <footer class="footer mt-5 py-3">
+        <div class="container text-center">
+          <span class="text-muted"><a href="https://www.moni.com.ar" target="_blank">By Moni</a></span>
+        </div>
+    </footer>
+
+	<!-- Incluimos los scripts de Bootstrap -->
+	<script src="{% static 'js/jquery-3.2.1.slim.min.js' %}" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="{% static 'js/popper.min.js' %}" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

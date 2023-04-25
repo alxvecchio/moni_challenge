@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Prestamo Facil</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+		.center {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 70vh;
+		}
+	</style>
+</head>
+
+<body style="background-color: #F3F3F3;">
+	<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+		<a class="navbar-brand" style="color: #17A2B8;" href="{% url 'home' %}">Préstamo Fácil</a>
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'management' %}">Ingresar</a>
+			</li>
+		</ul>
+	</nav>
+
+	{% block content %}
+    <div class="container">
+        <div class="center d-flex flex-column align-items-center">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Usuario" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10  text-center">
+                        <div class="container-login100-form-btn m-t-20">
+                            <button type="submit" class="btn btn-primary" style="background-color: #17A2B8;">Ingresar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+
+	<script src="{% static 'js/jquery-3.2.1.slim.min.js' %}" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="{% static 'js/popper.min.js' %}" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

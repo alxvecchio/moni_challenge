@@ -1,0 +1,106 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Prestamo Facil</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+	<link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+		.center {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 70vh;
+		}
+		@font-face {
+			font-family: "Bootstrap Icons";
+			src: url('../fonts/bootstrap-icons.woff2?448c34a56d2bbc6231ef44441c5122aa3f97f5d86f8dbbaeb9ca3e53c4f7b45e') format('woff2'),
+				url('../fonts/bootstrap-icons.woff?448c34a56d2bbc6231ef44441c5122aa3f97f5d86f8dbbaeb9ca3e53c4f7b45e') format('woff');
+			}
+			.bi::before {
+			display: inline-block;
+			font-family: "Bootstrap Icons";
+			font-style: normal;
+			font-weight: 400;
+			line-height: 1;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			}
+	</style>
+</head>
+
+<body style="background-color: #F3F3F3;">
+	<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+		<a class="navbar-brand" style="color: #17A2B8;" href="{% url 'home' %}">Préstamo Fácil</a>
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item">
+				{% if user.is_authenticated == user.is_superuser  %}
+					<a id = "logout" href="{% url 'logout' %}" class="nav-link">Cerrar Sesión</a>
+                {% else %}
+					<a class="nav-link" href="{% url 'management' %}">Ingresar</a>
+				{% endif %}
+			</li>
+		</ul>
+	</nav>
+
+	<div class="container">
+        <div class="center d-flex flex-column align-items-center">
+
+			<table class="table-bg table-bord table-sm">
+				<th scope="col" class="text-center" ><h4><b>Solicitudes cargadas</b></h4></th>
+			</table>
+			<table class="table-bg table-bord table-sm">
+				<thead>
+
+					<tr>
+						<th class="colum-style" style="text-align:center" scope="col">Nombre del cliente</th>
+						<th class="colum-style" style="text-align:center" scope="col">DNI</th>
+						<th class="colum-style" style="text-align:center" scope="col">Monto solicitado</th>
+						<th class="colum-style" style="text-align:center" scope="col">Fecha y Hora</th>
+						<th class="colum-style" style="text-align:center" scope="col">Estado</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% if loans %}
+						{% for loan in loans %}
+							<tr>
+								<td class="colum-style" style="text-align:center">{{ loan.name }} {{ loan.last_name }}</td>
+								<td class="colum-style" style="text-align:center">{{ loan.dni }}</td>
+								<td class="colum-style" style="text-align:center">{{ loan.amount_requested }}</td>
+								<td class="colum-style" style="text-align:center">{{ loan.date }}</td>
+								{% if loan.application_status == 'approve' %}
+									<td class="colum-style" style="text-align:center; color: darkgreen;">Aprobado</td>
+								{% else %}
+									<td class="colum-style" style="text-align:center; color: rgb(250, 2, 2);">Rechazado</td>
+								{% endif %}
+								<td class="colum-style" style="text-align:center">
+									<a href="{% url 'delete' loan_id=loan.id %}" onclick="return confirm('¿Estás seguro/a de que deseas eliminar este préstamo?');">
+										<i class="bi bi-trash"></i>
+									</a>
+								</td>
+							</tr>
+						{% endfor %}
+					{% else %}
+						<table class="table table-bord">
+							<th scope="col" class="text-center" style="color: rgb(34, 160, 3);"><h5><b>No hay solicitudes cargadas</b></h5></th>
+						</table>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+    <footer class="footer mt-5 py-3">
+        <div class="container text-center">
+          <span class="text-muted"><a href="https://www.moni.com.ar" target="_blank">By Moni</a></span>
+        </div>
+    </footer>
+
+	<script src="{% static 'js/jquery-3.2.1.slim.min.js' %}" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="{% static 'js/popper.min.js' %}" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
