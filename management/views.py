@@ -22,6 +22,7 @@ def login_manage(request) -> HttpResponse:
     Returns:
         HttpResponse: Renders login_manage.html template.
     """
+    logger.info(f'Entering Login to Management from {request.META["REMOTE_ADDR"]}')
     if request.user.is_staff:
         return redirect("management")
     if request.method == "POST":
@@ -47,6 +48,7 @@ def management(request) -> HttpResponse:
     Returns:
         HttpResponse: Renders management.html template with the requests loans.
     """
+    logger.info(f'Entering Management from {request.META["REMOTE_ADDR"]}')
     if not request.user.is_staff:
         return HttpResponse("No tienes permiso para acceder a esta página")
     loans = Form.objects.all()

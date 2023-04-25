@@ -22,6 +22,7 @@ def form(request) -> HttpResponse:
     Returns:
         HttpResponse: Renders form.html template with the given context.
     """
+    logger.info(f'Entering Form from {request.META["REMOTE_ADDR"]}')
     if request.method == "POST":
         dni = request.POST.get("dni")
         name = request.POST.get("name")
