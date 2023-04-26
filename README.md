@@ -24,7 +24,7 @@ También se debe desarrollar un sitio de administración en el que se puedan ver
 
 * Clonarse el proyecto
    ```
-   git clone git@gitlab.com:vecchio/moni-challenge.git
+   git clone git@github.com:alxvecchio/moni_challenge.git
    ```
 * Crear entorno virtual, con Python 3.10
 * Instalar dependencias y crear migraciones
